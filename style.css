@@ -1,0 +1,372 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-bg: #f0f4f8;
+  --color-card: #ffffff;
+  --color-border: #e2e8f0;
+  --color-text-primary: #1a202c;
+  --color-text-secondary: #718096;
+  --color-text-muted: #a0aec0;
+  --color-accent: #4f46e5;
+  --color-accent-hover: #4338ca;
+  --color-danger: #e53e3e;
+  --color-danger-hover: #c53030;
+  --color-done-line: #a0aec0;
+  --color-priority-high-bg: #fff5f5;
+  --color-priority-high-text: #c53030;
+  --color-priority-high-border: #feb2b2;
+  --color-priority-medium-bg: #fffaf0;
+  --color-priority-medium-text: #c05621;
+  --color-priority-medium-border: #fbd38d;
+  --color-priority-low-bg: #f0fff4;
+  --color-priority-low-text: #276749;
+  --color-priority-low-border: #9ae6b4;
+  --color-status-pending-bg: #ebf8ff;
+  --color-status-pending-text: #2b6cb0;
+  --color-status-progress-bg: #faf5ff;
+  --color-status-progress-text: #6b46c1;
+  --color-status-done-bg: #f0fff4;
+  --color-status-done-text: #276749;
+  --radius-card: 16px;
+  --radius-badge: 6px;
+  --radius-tag: 999px;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+  --transition: 0.2s ease;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  background: var(--color-bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  color: var(--color-text-primary);
+}
+
+/* Card */
+article[data-testid="test-todo-card"] {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  width: 100%;
+  max-width: 480px;
+  padding: 28px 24px 24px;
+  transition: box-shadow var(--transition);
+  overflow: hidden;
+}
+
+article[data-testid="test-todo-card"]:focus-within {
+  box-shadow:
+    0 6px 32px rgba(79, 70, 229, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Top row: checkbox + title */
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Checkbox */
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+input[data-testid="test-todo-complete-toggle"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+  transition:
+    background var(--transition),
+    border-color var(--transition);
+  flex-shrink: 0;
+  position: relative;
+}
+
+input[data-testid="test-todo-complete-toggle"]:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+input[data-testid="test-todo-complete-toggle"]:checked {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+input[data-testid="test-todo-complete-toggle"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 8px;
+  height: 12px;
+  border: 2.5px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+input[data-testid="test-todo-complete-toggle"]:hover:not(:checked) {
+  border-color: var(--color-accent);
+}
+
+/* Title */
+h2[data-testid="test-todo-title"] {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text-primary);
+  transition:
+    color var(--transition),
+    text-decoration var(--transition);
+  word-break: break-word;
+}
+
+.card--done h2[data-testid="test-todo-title"] {
+  text-decoration: line-through;
+  color: var(--color-done-line);
+}
+
+/* Badges row */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: var(--radius-badge);
+  border: 1px solid transparent;
+}
+
+/* Priority */
+[data-testid="test-todo-priority"][data-value="High"] {
+  background: var(--color-priority-high-bg);
+  color: var(--color-priority-high-text);
+  border-color: var(--color-priority-high-border);
+}
+
+[data-testid="test-todo-priority"][data-value="Medium"] {
+  background: var(--color-priority-medium-bg);
+  color: var(--color-priority-medium-text);
+  border-color: var(--color-priority-medium-border);
+}
+
+[data-testid="test-todo-priority"][data-value="Low"] {
+  background: var(--color-priority-low-bg);
+  color: var(--color-priority-low-text);
+  border-color: var(--color-priority-low-border);
+}
+
+/* Status */
+.status-badge[data-value="Pending"] {
+  background: var(--color-status-pending-bg);
+  color: var(--color-status-pending-text);
+  border-color: #bee3f8;
+}
+
+.status-badge[data-value="In Progress"] {
+  background: var(--color-status-progress-bg);
+  color: var(--color-status-progress-text);
+  border-color: #d6bcfa;
+}
+
+.status-badge[data-value="Done"] {
+  background: var(--color-status-done-bg);
+  color: var(--color-status-done-text);
+  border-color: var(--color-priority-low-border);
+}
+
+/* Description */
+p[data-testid="test-todo-description"] {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  word-break: break-word;
+}
+
+/* Due date & time remaining */
+.date-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.date-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: #f7fafc;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-tag);
+  padding: 4px 10px;
+}
+
+.date-chip svg {
+  flex-shrink: 0;
+}
+
+time[data-testid="test-todo-due-date"] {
+  font-variant-numeric: tabular-nums;
+}
+
+[data-testid="test-todo-time-remaining"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: var(--radius-tag);
+  padding: 4px 10px;
+}
+
+[data-testid="test-todo-time-remaining"].overdue {
+  background: #fff5f5;
+  color: var(--color-danger);
+  border: 1px solid #fed7d7;
+}
+
+[data-testid="test-todo-time-remaining"].upcoming {
+  background: #ebf8ff;
+  color: #2b6cb0;
+  border: 1px solid #bee3f8;
+}
+
+[data-testid="test-todo-time-remaining"].due-soon {
+  background: #fffaf0;
+  color: #c05621;
+  border: 1px solid #fbd38d;
+}
+
+/* Tags */
+ul[data-testid="test-todo-tags"] {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+ul[data-testid="test-todo-tags"] li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #4a5568;
+  background: #edf2f7;
+  border-radius: var(--radius-tag);
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+ul[data-testid="test-todo-tags"] li::before {
+  content: "#";
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+}
+
+/* Action buttons */
+.card-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    box-shadow var(--transition);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+button[data-testid="test-todo-edit-button"] {
+  background: #edf2f7;
+  color: #4a5568;
+}
+
+button[data-testid="test-todo-edit-button"]:hover {
+  background: #e2e8f0;
+  color: var(--color-text-primary);
+}
+
+button[data-testid="test-todo-delete-button"] {
+  background: #fff5f5;
+  color: var(--color-danger);
+}
+
+button[data-testid="test-todo-delete-button"]:hover {
+  background: #fed7d7;
+  color: var(--color-danger-hover);
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 16px 0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  article[data-testid="test-todo-card"] {
+    padding: 20px 16px 16px;
+    border-radius: 12px;
+  }
+
+  h2[data-testid="test-todo-title"] {
+    font-size: 1rem;
+  }
+}
